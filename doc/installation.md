@@ -7,7 +7,7 @@ permalink: installation.html
 disqus: false
 ---
 
-To set up your very own Pinpoint instance you can either **download the build results** from our [**latest release**](https://github.com/naver/pinpoint/releases/latest), or manually build from your Git clone.
+To set up your very own Pinpoint instance you can either **download the build results** from our [**latest release**](https://github.com/pinpoint-apm/pinpoint/releases/latest), or manually build from your Git clone.
 In order to run your own Pinpoint instance, you will need to run below components:
 
 * **HBase** (for storage)
@@ -21,24 +21,23 @@ To try out a simple quickstart project, please refer to the [quick-start guide](
 1. HBase ([details](#1-hbase))
 	1. Set up HBase cluster - [Apache HBase](http://hbase.apache.org)
 	2. Create HBase Schemas - feed `/scripts/hbase-create.hbase` to hbase shell.
-2. Build Pinpoint (Optional)([details](#2-building-pinpoint-optional)) - No need if you use the binaries.([here](https://github.com/naver/pinpoint/releases)).
+2. Build Pinpoint (Optional)([details](#2-building-pinpoint-optional)) - No need if you use the binaries.([here](https://github.com/pinpoint-apm/pinpoint/releases)).
 	1. Clone Pinpoint - `git clone $PINPOINT_GIT_REPOSITORY`
 	2. Set JAVA_HOME environment variable to JDK 8 home directory.
-	3. Set JAVA_6_HOME environment variable to JDK 6 home directory (1.6.0_45 recommended).
-	4. Set JAVA_7_HOME environment variable to JDK 7 home directory (1.7.0_80 recommended).
-	5. Set JAVA_8_HOME environment variable to JDK 8 home directory.
-	6. Set JAVA_9_HOME environment variable to JDK 9 home directory.
-	7. Run `./mvnw clean install -DskipTests=true` (or `./mvnw.cmd` for Windows)
+	3. Set JAVA_7_HOME environment variable to JDK 7 home directory ([Zulu jdk7](https://www.azul.com/downloads/zulu-community/?version=java-7-lts) recommended).
+	4. Set JAVA_8_HOME environment variable to JDK 8 home directory.
+	5. Set JAVA_9_HOME environment variable to JDK 9 home directory.
+	6. Run `./mvnw clean install -DskipTests=true` (or `./mvnw.cmd` for Windows)
 3. Pinpoint Collector ([details](#3-pinpoint-collector))
 	1. Start *pinpoint-collector-boot-$VERSION.jar* with java -jar command.
 	
-	    e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.1.0-SNAPSHOT.jar`
+	    e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.2.1.jar`
 	    
 	2. It will start with default settings. To learn more about default values or how to override them, please see the details below.
 4. Pinpoint Web ([details](#4-pinpoint-web))
 	1. Start *pinpoint-web-boot-$VERSION.jar* with java -jar command.
 	
-	    e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.1.0-SNAPSHOT.jar`
+	    e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.2.1.jar`
 	    
     2. It will start with default settings. To learn more about default values or how to override them, please see the details below.
 5. Pinpoint Agent ([details](#5-pinpoint-agent))
@@ -64,29 +63,27 @@ To run these scripts, feed them into the HBase shell like below:
 
 `$HBASE_HOME/bin/hbase shell hbase-create.hbase`
 
-See [here](https://github.com/naver/pinpoint/tree/master/hbase/scripts "Pinpoint HBase scripts") for a complete list of scripts.
+See [here](https://github.com/pinpoint-apm/pinpoint/tree/master/hbase/scripts "Pinpoint HBase scripts") for a complete list of scripts.
 
 ## 2. Building Pinpoint 
 
 There are two options:
 
-1. Download the build results from our [**latest release**](https://github.com/naver/pinpoint/releases/latest) and skip building process. **(Recommended)**
+1. Download the build results from our [**latest release**](https://github.com/pinpoint-apm/pinpoint/releases/latest) and skip building process. **(Recommended)**
 
 2. Build Pinpoint manually from the Git clone. **(Optional)**
 	
 	In order to do so, the following **requirements** must be met:
 
-    * JDK 6 installed ([jdk1.6.0_45](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html#jdk-6u45-oth-JPR) recommended)
     * JDK 7 installed ([jdk1.7.0_80](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u80-oth-JPR) recommended)
     * JDK 8 installed
     * JDK 9 installed
 	* JAVA_HOME environment variable set to JDK 8 home directory.
-	* JAVA_6_HOME environment variable set to JDK 6 home directory.
 	* JAVA_7_HOME environment variable set to JDK 7 home directory.
 	* JAVA_8_HOME environment variable set to JDK 8 home directory.
 	* JAVA_9_HOME environment variable set to JDK 9 home directory.
 
-	Additionally, the required Java version to run each Pinpoint component is given below:
+	Agent compatibility to Collector table:
 
 	{% include_relative compatibilityPinpoint.md %}
     
@@ -114,7 +111,7 @@ The path to this file should look like *$PINPOINT_PATH/collector/target/deploy/p
 ### Installation
 Since Pinpoint Collector is packaged as an executable jar file, you can start Collector by running it directly.
 
-e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.1.0-SNAPSHOT.jar`
+e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.2.1.jar`
 
 ### Configuration
 There are 3 configuration files used for Pinpoint Collector: *pinpoint-collector-root.properties*, *pinpoint-collector-grpc.properties*, and *hbase.properties*.
@@ -132,16 +129,16 @@ There are 3 configuration files used for Pinpoint Collector: *pinpoint-collector
 	* `hbase.client.port` (default: 2181)
 
 You may take a look at the full list of default configurations here:
-- [pinpoint-collector-root.properties](https://github.com/naver/pinpoint/blob/master/collector/src/main/resources/pinpoint-collector-root.properties)
-- [pinpoint-collector-grpc.properties](https://github.com/naver/pinpoint/blob/master/collector/src/main/resources/profiles/local/pinpoint-collector-grpc.properties)
-- [hbase.properties](https://github.com/naver/pinpoint/blob/master/collector/src/main/resources/profiles/local/hbase.properties)
+- [pinpoint-collector-root.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/collector/src/main/resources/pinpoint-collector-root.properties)
+- [pinpoint-collector-grpc.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/collector/src/main/resources/profiles/local/pinpoint-collector-grpc.properties)
+- [hbase.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/collector/src/main/resources/profiles/local/hbase.properties)
 
 #### When Building Manually
 You can modify default configuration values or add new profiles under `collector/src/main/resources/profiles/`.
 
 #### When Using Released Binary **(Recommended)**
 - You can override any configuration values with `-D` option. For example,
-    - `java -jar -Dspring.profiles.active=release -Dpinpoint.zookeeper.address=localhost -Dhbase.client.port=1234 pinpoint-collector-boot-2.1.0-SNAPSHOT.jar`
+    - `java -jar -Dspring.profiles.active=release -Dpinpoint.zookeeper.address=localhost -Dhbase.client.port=1234 pinpoint-collector-boot-2.2.1.jar`
 
 - To import a list of your customized configuration values from a file, you can use `--spring.config.additional-location` option. For example,
     - Create a file `./config/collector.properties`, and list the configuration values you want to override.
@@ -155,12 +152,12 @@ You can modify default configuration values or add new profiles under `collector
         > collector.receiver.stat.udp.receiveBufferSize=1234567
         >
 
-    - Execute with `java -jar pinpoint-collector-boot-2.1.0-SNAPSHOT.jar --spring.config.additional-location=./config/collector.properties`
+    - Execute with `java -jar pinpoint-collector-boot-2.2.1.jar --spring.config.additional-location=./config/collector.properties`
 
 - To further explore how to use externalized configurations, refer to [Spring Boot Reference Document](https://docs.spring.io/spring-boot/docs/2.2.x/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files).
 
 ### Profiles
-Pinpoint Collector provides two profiles: [release](https://github.com/naver/pinpoint/tree/master/collector/src/main/resources/profiles/release) and [local](https://github.com/naver/pinpoint/tree/master/collector/src/main/resources/profiles/local) (default).
+Pinpoint Collector provides two profiles: [release](https://github.com/pinpoint-apm/pinpoint/tree/master/collector/src/main/resources/profiles/release) and [local](https://github.com/pinpoint-apm/pinpoint/tree/master/collector/src/main/resources/profiles/local) (default).
 
 To specify which profile to use, configure `spring.profiles.active` value as described in the previous section.
     
@@ -189,7 +186,7 @@ Pinpoint Web Supported Browsers:
 ### Installation
 Since Pinpoint Web is packaged as an executable jar file, you can start Web by running it directly.
 
-e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.1.0-SNAPSHOT.jar`
+e.g.) `java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.2.1.jar`
 
 ### Configuration
 There are 2 configuration files used for Pinpoint Web: *pinpoint-web-root.properties*, and *hbase.properties*. 
@@ -199,16 +196,16 @@ There are 2 configuration files used for Pinpoint Web: *pinpoint-web-root.proper
 	* `hbase.client.port` (default: 2181)
 
 You may take a look at the default configuration files here
-  - [pinpoint-web-root.properties](https://github.com/naver/pinpoint/blob/master/web/src/main/resources/pinpoint-web-root.properties)
-  - [hbase.properties](https://github.com/naver/pinpoint/blob/master/web/src/main/resources/profiles/release/hbase.properties)
-  - [pinpoint-web.properties](https://github.com/naver/pinpoint/blob/master/web/src/main/resources/profiles/release/pinpoint-web.properties)
+  - [pinpoint-web-root.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/web/src/main/resources/pinpoint-web-root.properties)
+  - [hbase.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/web/src/main/resources/profiles/release/hbase.properties)
+  - [pinpoint-web.properties](https://github.com/pinpoint-apm/pinpoint/blob/master/web/src/main/resources/profiles/release/pinpoint-web.properties)
 
 #### When Building Manually
 You can modify default configuration values or add new profiles under `web/src/main/resources/profiles/`.
 
 #### When Using Released Binary **(Recommended)**
 - You can override any configuration values with `-D` option. For example,
-    - `java -jar -Dspring.profiles.active=release -Dpinpoint.zookeeper.address=localhost -Dhbase.client.port=1234 pinpoint-web-boot-2.1.0-SNAPSHOT.jar`
+    - `java -jar -Dspring.profiles.active=release -Dpinpoint.zookeeper.address=localhost -Dhbase.client.port=1234 pinpoint-web-boot-2.2.1.jar`
 
 - To import a list of your customized configuration values from a file, you can use `--spring.config.additional-location` option. For example,
     - Create a file `./config/web.properties`, and list the configuration values you want to override.
@@ -220,13 +217,13 @@ You can modify default configuration values or add new profiles under `web/src/m
         > cluster.zookeeper.sessiontimeout=10000
         >
 
-    - Execute with `java -jar pinpoint-web-boot-2.1.0-SNAPSHOT.jar --spring.config.additional-location=./config/web.properties`
+    - Execute with `java -jar pinpoint-web-boot-2.2.1.jar --spring.config.additional-location=./config/web.properties`
 
 - To further explore how to use externalized configurations, refer to [Spring Boot Reference Document](https://docs.spring.io/spring-boot/docs/2.2.x/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files).
 
 ### Profiles
 
-Pinpoint Web provides two profiles: [release](https://github.com/naver/pinpoint/tree/master/web/src/main/resources/profiles/release) (default) and [local](https://github.com/naver/pinpoint/tree/master/web/src/main/resources/profiles/local).
+Pinpoint Web provides two profiles: [release](https://github.com/pinpoint-apm/pinpoint/tree/master/web/src/main/resources/profiles/release) (default) and [local](https://github.com/pinpoint-apm/pinpoint/tree/master/web/src/main/resources/profiles/local).
 
 To specify which profile to use, configure `spring.profiles.active` value as described in the previous section.
     
@@ -248,7 +245,6 @@ pinpoint-agent
 |-- boot
 |   |-- pinpoint-annotations-$VERSION.jar
 |   |-- pinpoint-bootstrap-core-$VERSION.jar
-|   |-- pinpoint-bootstrap-java7-$VERSION.jar
 |   |-- pinpoint-bootstrap-java8-$VERSION.jar
 |   |-- pinpoint-bootstrap-java9-$VERSION.jar
 |   |-- pinpoint-commons-$VERSION.jar
@@ -311,9 +307,9 @@ CATALINA_OPTS="$CATALINA_OPTS <b>-Dpinpoint.applicationName</b>=$APPLICATION_NAM
 Start up Tomcat to start profiling your web application.
 
 Some application servers require additional configuration and/or may have caveats. Please take a look at the links below for further details.
-* [JBoss](https://github.com/naver/pinpoint/tree/master/plugins/jboss#pinpoint-jboss-plugin-configuration)
-* [Jetty](https://github.com/naver/pinpoint/blob/master/plugins/jetty/README.md)
-* [Resin](https://github.com/naver/pinpoint/tree/master/plugins/resin#pinpoint-resin-plugin-configuration)
+* [JBoss](https://github.com/pinpoint-apm/pinpoint/tree/master/plugins/jboss#pinpoint-jboss-plugin-configuration)
+* [Jetty](https://github.com/pinpoint-apm/pinpoint/blob/master/plugins/jetty/README.md)
+* [Resin](https://github.com/pinpoint-apm/pinpoint/tree/master/plugins/resin#pinpoint-resin-plugin-configuration)
 
 ### Configuration
 
@@ -336,7 +332,7 @@ Set these values appropriately in *pinpoint-root.config*:
 * `profiler.transport.grpc.stat.collector.port` (collector's *collector.receiver.grpc.stat.port* - default: 9992/TCP)
 * `profiler.transport.grpc.span.collector.port` (collector's *collector.receiver.grpc.span.port* - default: 9993/TCP)
 
-You may take a look at the default *pinpoint-root.config* file [here](https://github.com/naver/pinpoint/blob/master/agent/src/main/resources/pinpoint-root.config "pinpoint.config") along with all the available configuration options.
+You may take a look at the default *pinpoint-root.config* file [here](https://github.com/pinpoint-apm/pinpoint/blob/master/agent/src/main/resources/pinpoint-root.config "pinpoint.config") along with all the available configuration options.
 
 ### Profiles
 Add `-Dkey=value` to Java System Properties

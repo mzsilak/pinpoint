@@ -26,7 +26,7 @@ import com.navercorp.pinpoint.web.dao.AgentEventDao;
 import com.navercorp.pinpoint.web.vo.AgentEvent;
 import com.navercorp.pinpoint.web.vo.DurationalAgentEvent;
 import com.navercorp.pinpoint.web.vo.Range;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -107,7 +107,7 @@ public class AgentEventServiceImpl implements AgentEventService {
             if (agentEventBo.getEventType().isCategorizedAs(AgentEventTypeCategory.DURATIONAL)) {
                 durationalAgentEvents.add(createDurationalAgentEvent(agentEventBo, false));
             } else {
-                boolean hasMessage = !ArrayUtils.isEmpty(agentEventBo.getEventBody());
+                boolean hasMessage = ArrayUtils.hasLength(agentEventBo.getEventBody());
                 agentEvents.add(createAgentEvent(agentEventBo, hasMessage));
             }
         }

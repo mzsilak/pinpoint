@@ -33,6 +33,7 @@ import java.util.Objects;
 /**
  * @author minwoo.jung
  */
+@Deprecated
 public class SpringSmtpMailSender implements MailSender {
 
     private static final InternetAddress[] EMPTY_RECEIVERS = new InternetAddress[0];
@@ -46,13 +47,11 @@ public class SpringSmtpMailSender implements MailSender {
 
     public SpringSmtpMailSender(BatchConfiguration batchConfiguration, UserGroupService userGroupService, JavaMailSenderImpl springMailSender) {
         Objects.requireNonNull(batchConfiguration, "batchConfiguration");
-        Objects.requireNonNull(userGroupService, "userGroupService");
-        Objects.requireNonNull(springMailSender, "mailSender");
-
         this.pinpointUrl = batchConfiguration.getPinpointUrl();
         this.batchEnv = batchConfiguration.getBatchEnv();
-        this.userGroupService = userGroupService;
-        this.springMailSender = springMailSender;
+
+        this.userGroupService = Objects.requireNonNull(userGroupService, "userGroupService");
+        this.springMailSender = Objects.requireNonNull(springMailSender, "mailSender");
 
         try {
             senderEmailAddress = new InternetAddress(batchConfiguration.getSenderEmailAddress());

@@ -1,31 +1,18 @@
 ---
-title: "Pinpoint 2.0.2"
-keywords: pinpoint release, 2.0.2
+title: "Pinpoint 2.2.2"
+keywords: pinpoint release, 2.2.2
 permalink: main.html
 sidebar: mydoc_sidebar
 ---
 
-## What's New in 2.0.2
+# What's New in 2.2.2
 
- Fixed minor bugs and addiotional plugins added.
- 
-### Pinpoint Plugin
+v2.2.2 is a bug fix release of 2.2.1
 
- - Started to support Async Thread Plugin
-   * Servermap
-   ![Async Thread Plugin](https://user-images.githubusercontent.com/10057874/80352564-06070880-88af-11ea-81a4-22f5e6ac0f91.jpg)
-   Thank you @zifeihan  for your contribution
- 
- - Started to support Informix JDBC Plugin
-   * Mix view
-   ![Informix Plugin](https://user-images.githubusercontent.com/10057874/80352447-dfe16880-88ae-11ea-8502-7f76fdf61ca7.png)
-   Thank you @guillermomolina for your contribution
-    
-### Bugs
-
- Fixed problem that does not retransmit when metadata transmission fails. [#6662](https://github.com/naver/pinpoint/issues/6662)
- Fixed problem where completed transaction is not recognized in certain cases while using Webflux. [#6465](https://github.com/naver/pinpoint/issues/6465)
-
+There is a bug in the Reactor-netty plugin (v2.0.0 ~ 2.2.1) which inserts incorrect endPoint value.
+It only occurs in certain circumstances relating the high overload in Pinpoint-Collector
+To prevent this, it is recommended to upgrade to version 2.2.2 or higher when using the Reactor-netty plugin.
+  
 ## Upgrade consideration
 
 HBase compatibility table:
@@ -36,7 +23,7 @@ Agent compatibility to Collector table:
 
 {% include_relative compatibilityPinpoint.md %}
 
-Agent compatibility to Collector table:
+Additionally, the required Java version to run each Pinpoint component is given below:
 
 {% include_relative compatibilityJava.md %}
 

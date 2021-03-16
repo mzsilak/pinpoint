@@ -17,7 +17,7 @@
 package com.navercorp.pinpoint.common.server.bo.thrift;
 
 
-import com.google.common.annotations.VisibleForTesting;
+import com.navercorp.pinpoint.common.annotations.VisibleForTesting;
 import com.navercorp.pinpoint.common.server.bo.AnnotationBo;
 import com.navercorp.pinpoint.common.server.bo.AnnotationComparator;
 import com.navercorp.pinpoint.common.server.bo.AnnotationFactory;
@@ -38,7 +38,7 @@ import com.navercorp.pinpoint.thrift.dto.TLocalAsyncId;
 import com.navercorp.pinpoint.thrift.dto.TSpan;
 import com.navercorp.pinpoint.thrift.dto.TSpanChunk;
 import com.navercorp.pinpoint.thrift.dto.TSpanEvent;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Woonduk Kang(emeroad)
@@ -371,9 +372,7 @@ public class SpanFactory {
 
     // for test
     public SpanEventBo buildSpanEventBo(TSpanEvent tSpanEvent) {
-        if (tSpanEvent == null) {
-            throw new NullPointerException("tSpanEvent");
-        }
+        Objects.requireNonNull(tSpanEvent, "tSpanEvent");
 
         final SpanEventBo spanEvent = new SpanEventBo();
         bind(spanEvent, tSpanEvent);
@@ -381,9 +380,8 @@ public class SpanFactory {
     }
 
     private AnnotationBo newAnnotationBo(TAnnotation tAnnotation) {
-        if (tAnnotation == null) {
-            throw new NullPointerException("annotation");
-        }
+        Objects.requireNonNull(tAnnotation, "tAnnotation");
+
         AnnotationBo annotationBo = annotationFactory.buildAnnotation(tAnnotation);
         return annotationBo;
     }

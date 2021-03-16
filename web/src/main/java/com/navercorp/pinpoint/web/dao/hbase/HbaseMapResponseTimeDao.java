@@ -76,9 +76,8 @@ public class HbaseMapResponseTimeDao implements MapResponseDao {
 
     @Override
     public List<ResponseTime> selectResponseTime(Application application, Range range) {
-        if (application == null) {
-            throw new NullPointerException("application");
-        }
+        Objects.requireNonNull(application, "application");
+
         if (logger.isDebugEnabled()) {
             logger.debug("selectResponseTime applicationName:{}, {}", application, range);
         }
@@ -87,9 +86,6 @@ public class HbaseMapResponseTimeDao implements MapResponseDao {
 
         TableName mapStatisticsSelfTableName = descriptor.getTableName();
         List<ResponseTime> responseTimeList = hbaseOperations2.findParallel(mapStatisticsSelfTableName, scan, rowKeyDistributorByHashPrefix, responseTimeMapper, MAP_STATISTICS_SELF_VER2_NUM_PARTITIONS);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Self data {}", responseTimeList);
-        }
 
         if (!responseTimeList.isEmpty()) {
             return responseTimeList;
@@ -110,8 +106,8 @@ public class HbaseMapResponseTimeDao implements MapResponseDao {
 
         final Scan scan = new Scan();
         scan.setCaching(this.scanCacheSize);
-        scan.setStartRow(startKey);
-        scan.setStopRow(endKey);
+        scan.withStartRow(startKey);
+        scan.withStopRow(endKey);
         scan.addFamily(family);
         scan.setId("ApplicationSelfScan");
 

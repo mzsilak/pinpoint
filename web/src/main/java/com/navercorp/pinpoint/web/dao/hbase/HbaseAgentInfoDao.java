@@ -26,7 +26,7 @@ import com.navercorp.pinpoint.common.util.TimeUtils;
 import com.navercorp.pinpoint.web.dao.AgentInfoDao;
 import com.navercorp.pinpoint.web.vo.AgentInfo;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -92,7 +92,7 @@ public class HbaseAgentInfoDao implements AgentInfoDao {
         Scan scan = new Scan();
         byte[] agentIdBytes = Bytes.toBytes(agentId);
         byte[] reverseStartKey = RowKeyUtils.concatFixedByteAndLong(agentIdBytes, HbaseTableConstants.AGENT_NAME_MAX_LEN, Long.MAX_VALUE);
-        scan.setStartRow(reverseStartKey);
+        scan.withStartRow(reverseStartKey);
         scan.setReversed(true);
         scan.setMaxVersions(1);
         scan.setCaching(SCANNER_CACHING);
@@ -139,8 +139,8 @@ public class HbaseAgentInfoDao implements AgentInfoDao {
         byte[] startKeyBytes = RowKeyUtils.concatFixedByteAndLong(agentIdBytes, HbaseTableConstants.AGENT_NAME_MAX_LEN, startTime);
         byte[] endKeyBytes = RowKeyUtils.concatFixedByteAndLong(agentIdBytes, HbaseTableConstants.AGENT_NAME_MAX_LEN, Long.MAX_VALUE);
 
-        scan.setStartRow(startKeyBytes);
-        scan.setStopRow(endKeyBytes);
+        scan.withStartRow(startKeyBytes);
+        scan.withStopRow(endKeyBytes);
         scan.addFamily(descriptor.getColumnFamilyName());
 
         scan.setMaxVersions(1);

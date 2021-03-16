@@ -39,7 +39,7 @@ import java.util.Optional;
  * @author HyunGil Jeong
  */
 @Service
-public class ThriftAgentStatHandlerV2 implements SimpleHandler {
+public class ThriftAgentStatHandlerV2 implements SimpleHandler<TBase<?, ?>> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final ThriftAgentStatMapper agentStatMapper;
@@ -53,12 +53,12 @@ public class ThriftAgentStatHandlerV2 implements SimpleHandler {
                                     Optional<List<AgentStatService>> agentStatServiceList) {
         this.agentStatMapper = Objects.requireNonNull(agentStatMapper, "agentStatMapper");
         this.agentStatBatchMapper = Objects.requireNonNull(agentStatBatchMapper, "agentStatBatchMapper");
-        this.agentStatServiceList = Objects.requireNonNull(agentStatServiceList, "agentStatServiceList").orElse(Collections.emptyList());
+        this.agentStatServiceList = Objects.requireNonNull(agentStatServiceList, "agentStatServiceList").orElseGet(Collections::emptyList);
     }
 
     @Override
-    public void handleSimple(ServerRequest serverRequest) {
-        final Object data = serverRequest.getData();
+    public void handleSimple(ServerRequest<TBase<?, ?>> serverRequest) {
+        final TBase<?, ?> data = serverRequest.getData();
         if (logger.isDebugEnabled()) {
             logger.debug("Handle simple data={}", data);
         }

@@ -4,13 +4,13 @@ Pinpoint QuickStart provides a sample TestApp for the Agent.
 ## Docker
 Installing Pinpoint with these docker files will take approximately 10min.
 
-Visit [Official Pinpoint-Docker repository](https://github.com/naver/pinpoint-docker) for more information.
+Visit [Official Pinpoint-Docker repository](https://github.com/pinpoint-apm/pinpoint-docker) for more information.
 
 ## Installation
-To set up your very own Pinpoint instance you can either **download the build results** from our [**latest release**](https://github.com/naver/pinpoint/releases/latest).
+To set up your very own Pinpoint instance you can either **download the build results** from our [**latest release**](https://github.com/pinpoint-apm/pinpoint/releases/latest).
 
 ### HBase
-Download, Configure, and Start HBase - [1. Hbase](https://naver.github.io/pinpoint/installation.html#1-hbase).
+Download, Configure, and Start HBase - [1. Hbase](https://pinpoint-apm.github.io/pinpoint/installation.html#1-hbase).
 
 ~~~
 $ tar xzvf hbase-x.x.x-bin.tar.gz
@@ -18,24 +18,24 @@ $ cd hbase-x.x.x/
 $ ./bin/start-hbase.sh
 ~~~
 
-See [scripts](https://github.com/naver/pinpoint/tree/master/hbase/scripts) and Run.
+See [scripts](https://github.com/pinpoint-apm/pinpoint/tree/master/hbase/scripts) and Run.
 
 ~~~
 $ ./bin/hbase shell hbase-create.hbase
 ~~~
 
 ### Pinpoint Collector
-Download, and Start Collector - [3. Pinpoint Collector](https://naver.github.io/pinpoint/installation.html#3-pinpoint-collector)
+Download, and Start Collector - [3. Pinpoint Collector](https://pinpoint-apm.github.io/pinpoint/installation.html#3-pinpoint-collector)
 
 ~~~
-$ java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.1.0-SNAPSHOT.jar
+$ java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-collector-boot-2.2.1.jar
 ~~~
 
 ### Pinpoint Web
-Download, and Start Web - [4. Pinpoint Web](https://naver.github.io/pinpoint/installation.html#4-pinpoint-web)
+Download, and Start Web - [4. Pinpoint Web](https://pinpoint-apm.github.io/pinpoint/installation.html#4-pinpoint-web)
 
 ~~~
-$ java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.1.0-SNAPSHOT.jar
+$ java -jar -Dpinpoint.zookeeper.address=localhost pinpoint-web-boot-2.2.1.jar
 ~~~
 
 ## Java Agent
@@ -46,20 +46,20 @@ In order to build Pinpoint, the following requirements must be met:
 * JDK 8 installed
 
 ### When Using Released Binary(Recommended) 
-Download Pinpoint from [Latest Release](https://github.com/naver/pinpoint/releases/latest).
+Download Pinpoint from [Latest Release](https://github.com/pinpoint-apm/pinpoint/releases/latest).
 
 Extract the downloaded file.
 ~~~
-$ tar xvzf pinpoint-agent-2.1.0-SNAPSHOT.tar.gz
+$ tar xvzf pinpoint-agent-2.2.1.tar.gz
 ~~~
 
 Run the JAR file, as follows:
 ~~~
-$ java -jar -javaagent:pinpoint-agent-2.1.0-SNAPSHOT/pinpoint-bootstrap-2.1.0-SNAPSHOT.jar -Dpinpoint.agentId=test-agent -Dpinpoint.applicationName=TESTAPP pinpoint-quickstart-testapp-2.1.0-SNAPSHOT.jar
+$ java -jar -javaagent:pinpoint-agent-2.2.1/pinpoint-bootstrap.jar -Dpinpoint.agentId=test-agent -Dpinpoint.applicationName=TESTAPP pinpoint-quickstart-testapp-2.2.1.jar
 ~~~
 
 ### When Building Manually
-Download Pinpoint with `git clone https://github.com/naver/pinpoint.git` or [download](https://github.com/naver/pinpoint/archive/master.zip) the project as a zip file and unzip.
+Download Pinpoint with `git clone https://github.com/pinpoint-apm/pinpoint.git` or [download](https://github.com/pinpoint-apm/pinpoint/archive/master.zip) the project as a zip file and unzip.
 
 Change to the pinpoint directory, and build.
 ~~~
@@ -77,7 +77,7 @@ $ ./mvnw clean package
 Change to the pinpoint directory, and run.
 ~~~
 $ cd ../../
-$ java -jar -javaagent:agent/target/pinpoint-agent-2.1.0-SNAPSHOT/pinpoint-bootstrap-2.1.0-SNAPSHOT.jar -Dpinpoint.agentId=test-agent -Dpinpoint.applicationName=TESTAPP quickstart/testapp/target/pinpoint-quickstart-testapp-2.1.0-SNAPSHOT.jar
+$ java -jar -javaagent:agent/target/pinpoint-agent-2.2.1/pinpoint-bootstrap.jar -Dpinpoint.agentId=test-agent -Dpinpoint.applicationName=TESTAPP quickstart/testapp/target/pinpoint-quickstart-testapp-2.2.1.jar
 ~~~
 
 ### Get Started
